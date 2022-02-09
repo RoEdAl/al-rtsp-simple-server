@@ -4,19 +4,15 @@
 
 pkgname=rtsp-simple-server
 pkgver=0.17.16
-pkgrel=1
-pkgdesc="Ready-to-use RTSP server and RTSP proxy that allows to read, publish and proxy video and audio streams"
+pkgrel=2
+pkgdesc='Ready-to-use RTSP server and RTSP proxy that allows to read, publish and proxy video and audio streams'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
-url="http://github.com/aler9/rtsp-simple-server"
+url='http://github.com/aler9/rtsp-simple-server'
 license=('MIT')
 depends=('glibc')
-backup=(
-	"etc/${pkgname}/${pkgname}.yml"
-)
+backup=(etc/$pkgname/${pkgname}.yml)
 makedepends=('go' 'git')
-provides=("${pkgname%-git}")
-conflicts=("${pkgname%-git}")
-source=("${pkgname}-${pkgver}.tar.gz::http://github.com/aler9/${pkgname}/archive/v${pkgver}.tar.gz"
+source=("${pkgname}-${pkgver}.tar.gz::http://github.com/aler9/$pkgname/archive/v${pkgver}.tar.gz"
         'rtsp-simple-server.service')
 md5sums=('441c5c949cb9b5e0588ec6df78620e91'
          '81b313c4715f2ec997c64aa47f75e444')
@@ -30,6 +26,7 @@ prepare() {
 
 	msg2 'GOPATH setup'
 	local GOPATH="$srcdir/gopath"
+	mkdir -p "$GOPATH"
 
 	cd "$srcdir/${pkgname}-${pkgver}"
 	mkdir -p build
@@ -52,14 +49,14 @@ build() {
 		'GOFLAGS=-buildmode=pie -modcacherw -trimpath'
 	)
 
-	cd "$srcdir/${pkgname}-${pkgver}"
+	cd $srcdir/${pkgname}-${pkgver}
 	env "${ENV_ARGS[@]}" go build -o build .
 }
 
 package() {
-	install -Dm644 rtsp-simple-server.service "$pkgdir"/usr/lib/systemd/system/rtsp-simple-server.service
+	install -Dm644 rtsp-simple-server.service $pkgdir/usr/lib/systemd/system/rtsp-simple-server.service
 
-	cd "$srcdir/${pkgname}-${pkgver}"
-	install -Dm755 build/${pkgname} "$pkgdir"/usr/bin/${pkgname}
-	install -Dm644 rtsp-simple-server.yml "$pkgdir/etc/${pkgname}/${pkgname}.yml"
+	cd $srcdir/${pkgname}-${pkgver}
+	install -Dm755 build/$pkgname $pkgdir/usr/bin/$pkgname
+	install -Dm644 rtsp-simple-server.yml $pkgdir/etc/$pkgname/${pkgname}.yml
 }
