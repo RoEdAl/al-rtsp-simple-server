@@ -3,8 +3,8 @@
 # Based on http://aur.archlinux.org/packages/rtsp-simple-server-git
 
 pkgname=rtsp-simple-server
-pkgver=0.17.16
-pkgrel=2
+pkgver=0.17.17
+pkgrel=1
 pkgdesc='Ready-to-use RTSP server and RTSP proxy that allows to read, publish and proxy video and audio streams'
 arch=('i686' 'x86_64' 'aarch64' 'armv7h' 'armv6h')
 url='http://github.com/aler9/rtsp-simple-server'
@@ -14,7 +14,7 @@ backup=(etc/$pkgname/${pkgname}.yml)
 makedepends=('go' 'git')
 source=("${pkgname}-${pkgver}.tar.gz::http://github.com/aler9/$pkgname/archive/v${pkgver}.tar.gz"
         'rtsp-simple-server.service')
-md5sums=('441c5c949cb9b5e0588ec6df78620e91'
+md5sums=('3173da01c52291a5818cce45661f2146'
          '81b313c4715f2ec997c64aa47f75e444')
 
 prepare() {
